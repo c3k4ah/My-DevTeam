@@ -20,6 +20,15 @@ class ProjectCreateEvent extends ProjectEvent {
   List<Object> get props => [project];
 }
 
+class ProjectLoardByIdEvent extends ProjectEvent {
+  const ProjectLoardByIdEvent(this.project);
+
+  final ProjectEntity project;
+
+  @override
+  List<Object> get props => [project];
+}
+
 class ProjectUpdateEvent extends ProjectEvent {
   const ProjectUpdateEvent(this.project);
 
