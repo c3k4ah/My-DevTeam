@@ -12,7 +12,7 @@ class ProjectEntity extends Equatable {
     required this.taskIds,
   });
 
-  final String id;
+  final int id;
   final String name;
   final String description;
   final String image;

@@ -7,7 +7,7 @@ class ProjectDataSourceImpl implements ProjectRemoteData {
   }
 
   @override
-  Future<void> deleteProject({required String id}) {
+  Future<void> deleteProject({required int id}) {
     throw UnimplementedError();
   }
 
@@ -17,7 +17,7 @@ class ProjectDataSourceImpl implements ProjectRemoteData {
   }
 
   @override
-  Future<ProjectModel> getProjectById({required String id}) {
+  Future<ProjectModel> getProjectById({required int id}) {
     throw UnimplementedError();
   }
 

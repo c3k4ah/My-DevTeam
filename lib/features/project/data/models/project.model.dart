@@ -2,7 +2,7 @@ import '../../domain/domaine.dart';
 
 class ProjectModel extends ProjectEntity {
   const ProjectModel({
-    required String id,
+    required int id,
     required String name,
     required String description,
     required String image,
@@ -49,7 +49,7 @@ class ProjectModel extends ProjectEntity {
 
   factory ProjectModel.fromMap(Map<String, Object?> map) {
     return ProjectModel(
-      id: map['id']! as String,
+      id: map['id']! as int,
       name: map['name']! as String,
       description: map['description']! as String,
       image: map['image']! as String,
@@ -65,7 +65,7 @@ class ProjectModel extends ProjectEntity {
 
   factory ProjectModel.fromJson(Map<String, Object?> json) {
     return ProjectModel(
-      id: json['id']! as String,
+      id: json['id']! as int,
       name: json['name']! as String,
       description: json['description']! as String,
       image: json['image']! as String,
@@ -103,7 +103,7 @@ class ProjectModel extends ProjectEntity {
     List<String>? taskIds,
   }) {
     return ProjectModel(
-      id: id ?? this.id,
+      id: this.id,
       name: name ?? this.name,
       description: description ?? this.description,
       image: image ?? this.image,

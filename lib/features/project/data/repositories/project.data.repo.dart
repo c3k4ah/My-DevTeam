@@ -25,7 +25,7 @@ class ProjectDataRepo implements ProjectDomainRepo {
   }
 
   @override
-  Future<Either<Failure, void>> deleteProject({required String id}) async {
+  Future<Either<Failure, void>> deleteProject({required int id}) async {
     try {
       final result = await remoteData.deleteProject(id: id);
       return Right(result);
@@ -46,7 +46,7 @@ class ProjectDataRepo implements ProjectDomainRepo {
 
   @override
   Future<Either<Failure, ProjectEntity>> getProjectById(
-      {required String id}) async {
+      {required int id}) async {
     try {
       final result = await remoteData.getProjectById(id: id);
       return Right(result);
