@@ -9,6 +9,7 @@ part 'project_event.dart';
 part 'project_state.dart';
 
 class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
+  // on a besoin de nos usecases pour faire le lien avec le domaine et la data
   final GetAllProjects getAllProjects;
   final GetProjectById getProjectById;
   final CreateProject createProject;
@@ -21,11 +22,14 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     required this.createProject,
     required this.updateProject,
     required this.deleteProject,
-  }) : super(const ProjectState(
+  }) : super(
+            // on initialise le state avec les valeurs par défaut
+            const ProjectState(
           projects: [],
           status: ProjectStatus.initial,
           errorMessage: '',
         )) {
+    // c'est ici que l'on va gérer les événements qui vont être émis par le bloc
     on<ProjectLoadEvent>(_onProjectLoadEvent);
     on<ProjectLoardByIdEvent>(_onProjectLoadByIdEvent);
     on<ProjectCreateEvent>(_onProjectCreateEvent);
@@ -95,10 +99,9 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
         )),
         (_) => emit(state.copyWith(
           status: ProjectStatus.loaded,
-          projects: [
-            for (final item in state.projects)
-              if (item.id != event.project.id) item
-          ],
+          projects: state.projects
+              .where((element) => element.id != event.project.id)
+              .toList(),
         )),
       );
     });
