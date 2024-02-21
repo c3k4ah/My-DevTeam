@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
 
 // import '../../../../core/styles/app_colors.dart';
 import '../../../../core/DTO/models/page_propriety_model.dart';
@@ -19,11 +18,8 @@ class MainPage extends StatelessWidget {
     return AutoTabsRouter(
       duration: const Duration(milliseconds: 300),
       transitionBuilder: (context, child, animation) {
-        final tween = Tween(begin: const Offset(1, 0), end: Offset.zero);
-        final offsetAnimation = animation.drive(tween);
-
-        return SlideTransition(
-          position: offsetAnimation,
+        return FadeTransition(
+          opacity: animation,
           child: child,
         );
       },

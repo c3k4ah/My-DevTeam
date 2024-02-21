@@ -13,8 +13,8 @@ class Sidebar extends StatelessWidget {
     return Container(
         height: 700,
         width: 70,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+        decoration: const BoxDecoration(
+          // borderRadius: BorderRadius.circular(15),
           color: Colors.blue,
         ),
         child: Column(
