@@ -6,8 +6,6 @@ part 'document_state.dart';
 
 class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
   DocumentBloc() : super(DocumentInitial()) {
-    on<DocumentEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<DocumentEvent>((event, emit) {});
   }
 }

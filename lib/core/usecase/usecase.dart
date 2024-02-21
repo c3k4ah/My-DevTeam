@@ -10,3 +10,8 @@ abstract class Usecase<T, P> {
 }
 
 class NoParams {}
+
+// user for streams
+abstract class StreamUsecase<T, P> {
+  Stream<Either<Failure, T?>> call(P params);
+}

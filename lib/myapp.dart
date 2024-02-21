@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'bloc_providers/bloc_providers.dart';
+import 'core/routes/app_router.dart';
+import 'core/styles/themes.dart';
+import 'features/auth/presentation/sign_in/manager/sign_in_bloc.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -6,11 +13,26 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'My DevTeam',
-      theme: ThemeData(
-        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return MultiBlocProvider(
+      providers: blocProviders,
+      child: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          final router = AppRouter(state.status);
+          return MaterialApp.router(
+            title: 'Diaspora Dating',
+            theme: theme,
+            routerConfig: router.config(),
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('fr'),
+            ],
+          );
+        },
       ),
     );
   }

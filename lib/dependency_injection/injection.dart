@@ -1,31 +1,93 @@
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:pocketbase/pocketbase.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void initInjection() {
-  final getIt = GetIt.instance;
-  blocs(getIt);
-  datasources(getIt);
-  repositories(getIt);
-  usecases(getIt);
-  externalResources(getIt);
+import '../core/constants/const_url.dart';
+import '../core/constants/shared_preference_key.dart';
+import '../core/networks/network.dart';
+import '../core/networks/network_info.dart';
+import '../core/source/interceptors/auth_interceptor.dart';
+import '../core/source/remote/pocket_base_source.dart';
+import '../core/source/remote/pocket_base_source_impl.dart';
+import '../core/source/remote/remote_source.dart';
+import '../core/source/remote/remote_source_impl.dart';
+import '../features/auth/data/datasources/local/auth_local_data_source.dart';
+import '../features/auth/data/datasources/local/auth_local_data_source_impl.dart';
+import '../features/auth/data/datasources/remote/auth_remote_data_source.dart';
+import '../features/auth/data/datasources/remote/auth_remote_data_source_impl.dart';
+import '../features/auth/data/repositories/auth_repository_impl.dart';
+import '../features/auth/domain/repositories/auth_repository.dart';
+import '../features/auth/domain/usecases/check_user_is_connected_usecase.dart';
+import '../features/auth/domain/usecases/get_cached_user_usecase.dart';
+import '../features/auth/domain/usecases/login_user_usecase.dart';
+import '../features/auth/domain/usecases/login_with_facebook_usecase.dart';
+import '../features/auth/domain/usecases/login_with_google_usecase.dart';
+import '../features/auth/presentation/sign_in/manager/sign_in_bloc.dart';
+
+part 'injection_bloc.dart';
+
+part 'injection_usecase.dart';
+
+part 'injection_repository.dart';
+
+part 'injection_datasource.dart';
+
+final getIt = GetIt.instance;
+
+Future<void> initInjection() async {
+  blocs();
+  await service();
+  datasources();
+  repositories();
+  usecases();
+  externalResources();
 }
 
-void blocs(GetIt getIt) {}
-
-void datasources(GetIt getIt) {}
-
-void repositories(GetIt getIt) {}
-
-void usecases(GetIt getIt) {}
-
-Future<void> service(GetIt getIt) async {
+Future<void> service() async {
   final sharedPreferences = await SharedPreferences.getInstance();
+  // await sharedPreferences.clear();
+  final store = AsyncAuthStore(
+    save: (data) async {
+      await sharedPreferences.setString(SharedPreferenceKey.pbAuth, data);
+    },
+    initial: sharedPreferences.getString(SharedPreferenceKey.pbAuth),
+  );
 
-  getIt
-      .registerSingletonAsync<SharedPreferences>(() async => sharedPreferences);
+  getIt.registerSingleton<SharedPreferences>(sharedPreferences);
+  getIt.registerLazySingleton<AuthStore>(() => AuthStore());
+
+  final dio = Dio(
+    BaseOptions(
+      baseUrl: '${ConstString.baseUrl}/api/',
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+      },
+    ),
+  );
+  dio.interceptors.add(AuthInterceptor(dio));
+  dio.interceptors.add(
+    PrettyDioLogger(
+      requestBody: true,
+      requestHeader: true,
+    ),
+  );
+  final pb = PocketBase(ConstString.baseUrl, authStore: store);
+
+  getIt.registerSingleton(dio);
+  getIt.registerLazySingleton<RemoteSource>(() => RemoteSourceImpl(dio));
+  getIt.registerLazySingleton<PocketBaseSource>(() => PocketBaseSourceImpl(pb));
 }
 
-void externalResources(GetIt getIt) {
-  getIt.registerSingleton<http.Client>(http.Client());
+void externalResources() {
+  getIt.registerLazySingleton(() => InternetConnection());
+
+  getIt.registerLazySingleton<ConnexionChecker>(
+    () => ConnexionCheckerImp(
+      connectivity: getIt<InternetConnection>(),
+    ),
+  );
 }
