@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:mydevteam/features/project/data/data.dart';
+import 'package:mydevteam/features/project/domain/domaine.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,6 +28,14 @@ import '../features/auth/domain/usecases/login_user_usecase.dart';
 import '../features/auth/domain/usecases/login_with_facebook_usecase.dart';
 import '../features/auth/domain/usecases/login_with_google_usecase.dart';
 import '../features/auth/presentation/sign_in/manager/sign_in_bloc.dart';
+import '../features/home/data/datasources/local/local_data_source.dart';
+import '../features/home/data/datasources/local/local_data_source_impl.dart';
+import '../features/home/data/repositories/repository_impl.dart';
+import '../features/home/domain/repositories/repository.dart';
+import '../features/home/domain/usecases/usecases.dart';
+import '../features/home/presentation/manager/home_bloc.dart';
+import '../features/project/data/datasources/project.remotedata.impl.dart';
+import '../features/project/presentation/bloc/project_bloc.dart';
 
 part 'injection_bloc.dart';
 

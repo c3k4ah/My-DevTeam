@@ -28,3 +28,12 @@ class ProjectState extends Equatable {
   @override
   List<Object?> get props => [projects, status, errorMessage];
 }
+
+class ProjectInitial extends ProjectState {
+  ProjectInitial()
+      : super(
+          projects: [],
+          status: ProjectStatus.initial,
+          errorMessage: '',
+        );
+}

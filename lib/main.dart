@@ -10,9 +10,9 @@ Future<void> main() async {
   // await windowManager.ensureInitialized();
 
   // WindowOptions windowOptions = const WindowOptions(
-  //   // size: Size(1300, 800),
-  //   // minimumSize: Size(1300, 800),
-  //   // maximumSize: Size(1300, 800),
+  // size: Size(1300, 800),
+  // minimumSize: Size(1300, 800),
+  // maximumSize: Size(1300, 800),
   //   center: true,
   //   fullScreen: false,
   //   backgroundColor: Colors.transparent,

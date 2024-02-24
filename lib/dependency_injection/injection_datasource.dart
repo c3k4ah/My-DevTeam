@@ -12,4 +12,16 @@ void datasources() {
       getIt(),
     ),
   );
+
+  getIt.registerLazySingleton<HomeLocalDataSource>(
+    () => HomeLocalDataSourceImpl(
+      getIt(),
+    ),
+  );
+
+  getIt.registerLazySingleton<ProjectRemoteData>(
+    () => ProjectDataSourceImpl(
+      getIt(),
+    ),
+  );
 }

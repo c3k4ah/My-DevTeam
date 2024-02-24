@@ -21,7 +21,8 @@ dependencies:
   transparent_image: ^2.0.1
   clean_calendar: ^1.1.0
   table_calendar: ^3.0.6
-  syncfusion_flutter_calendar: ^21.2.3
+  syncfusion_flutter_calendar: 
+  scrollable_table_view: ^2.0.3
   ionicons: ^0.2.2
 
   #--State managment
@@ -70,6 +71,7 @@ dependencies:
   pointer_interceptor: ^0.10.1
   flutter_typeahead: ^5.0.2
   window_manager: ^0.3.8
+  flutter_expandable_table: ^2.0.1
   
   
 dev_dependencies:

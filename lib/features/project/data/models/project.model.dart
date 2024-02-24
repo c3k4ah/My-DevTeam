@@ -2,115 +2,95 @@ import '../../domain/domaine.dart';
 
 class ProjectModel extends ProjectEntity {
   const ProjectModel({
-    required int id,
-    required String name,
-    required String description,
-    required String image,
-    required DateTime createdAt,
-    required DateTime updatedAt,
-    required List<String> memberIds,
-    required List<String> taskIds,
+    String? id,
+    String? collectionId,
+    String? collectionName,
+    DateTime? created,
+    DateTime? updated,
+    String? title,
+    String? description,
+    List<String>? documents,
+    List<String>? members,
+    List<String>? sprint,
+    List<String>? managers,
+    DateTime? starDate,
+    DateTime? endDate,
+    String? progression,
   }) : super(
           id: id,
-          name: name,
+          collectionId: collectionId,
+          collectionName: collectionName,
+          created: created,
+          updated: updated,
+          title: title,
           description: description,
-          image: image,
-          createdAt: createdAt,
-          updatedAt: updatedAt,
-          memberIds: memberIds,
-          taskIds: taskIds,
+          documents: documents,
+          members: members,
+          sprint: sprint,
+          managers: managers,
+          starDate: starDate,
+          endDate: endDate,
+          progression: progression,
         );
+
+  factory ProjectModel.fromJson(Map<String, dynamic> json) {
+    return ProjectModel(
+      id: json['id'],
+      collectionId: json['collectionId'],
+      collectionName: json['collectionName'],
+      created: json['created'] == null ? null : DateTime.parse(json['created']),
+      updated: json['updated'] == null ? null : DateTime.parse(json['updated']),
+      title: json['title'],
+      description: json['description'],
+      documents:
+          json['documents'] == null ? [] : List<String>.from(json['documents']),
+      members:
+          json['members'] == null ? [] : List<String>.from(json['members']),
+      sprint: json['sprint'] == null ? [] : List<String>.from(json['sprint']),
+      managers: json['managers'] == null ? [] : List.from(json['managers']),
+      starDate:
+          json['star_date'] == null ? null : DateTime.parse(json['star_date']),
+      endDate:
+          json['end_date'] == null ? null : DateTime.parse(json['end_date']),
+      progression: json['progression'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'collectionId': collectionId,
+      'collectionName': collectionName,
+      'created': created,
+      'updated': updated,
+      'title': title,
+      'description': description,
+      'documents': documents,
+      'members': members,
+      'sprint': sprint,
+      'managers': managers,
+      'star_date': starDate,
+      'end_date': endDate,
+      'progression': progression,
+    };
+  }
 
   factory ProjectModel.fromEntity(ProjectEntity entity) {
     return ProjectModel(
       id: entity.id,
-      name: entity.name,
+      collectionId: entity.collectionId,
+      collectionName: entity.collectionName,
+      created: entity.created,
+      updated: entity.updated,
+      title: entity.title,
       description: entity.description,
-      image: entity.image,
-      createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
-      memberIds: entity.memberIds,
-      taskIds: entity.taskIds,
-    );
-  }
-
-  ProjectEntity toEntity() {
-    return ProjectEntity(
-      id: id,
-      name: name,
-      description: description,
-      image: image,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      memberIds: memberIds,
-      taskIds: taskIds,
-    );
-  }
-
-  factory ProjectModel.fromMap(Map<String, Object?> map) {
-    return ProjectModel(
-      id: map['id']! as int,
-      name: map['name']! as String,
-      description: map['description']! as String,
-      image: map['image']! as String,
-      createdAt: DateTime.parse(map['createdAt']! as String),
-      updatedAt: DateTime.parse(map['updatedAt']! as String),
-      memberIds: (map['memberIds']! as List<Object?>)
-          .map((e) => e! as String)
-          .toList(),
-      taskIds:
-          (map['taskIds']! as List<Object?>).map((e) => e! as String).toList(),
-    );
-  }
-
-  factory ProjectModel.fromJson(Map<String, Object?> json) {
-    return ProjectModel(
-      id: json['id']! as int,
-      name: json['name']! as String,
-      description: json['description']! as String,
-      image: json['image']! as String,
-      createdAt: DateTime.parse(json['createdAt']! as String),
-      updatedAt: DateTime.parse(json['updatedAt']! as String),
-      memberIds: (json['memberIds']! as List<Object?>)
-          .map((e) => e! as String)
-          .toList(),
-      taskIds:
-          (json['taskIds']! as List<Object?>).map((e) => e! as String).toList(),
-    );
-  }
-
-  Map<String, Object?> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'description': description,
-      'image': image,
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
-      'memberIds': memberIds,
-      'taskIds': taskIds,
-    };
-  }
-
-  ProjectModel copyWith({
-    String? id,
-    String? name,
-    String? description,
-    String? image,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    List<String>? memberIds,
-    List<String>? taskIds,
-  }) {
-    return ProjectModel(
-      id: this.id,
-      name: name ?? this.name,
-      description: description ?? this.description,
-      image: image ?? this.image,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      memberIds: memberIds ?? this.memberIds,
-      taskIds: taskIds ?? this.taskIds,
+      documents: entity.documents,
+      members: entity.members,
+      sprint: entity.sprint,
+      managers: entity.managers,
+      starDate: entity.starDate,
+      endDate: entity.endDate,
+      progression: entity.progression,
     );
   }
 }

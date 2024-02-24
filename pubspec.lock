@@ -470,6 +470,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.1"
+  flutter_expandable_table:
+    dependency: "direct main"
+    description:
+      name: flutter_expandable_table
+      sha256: e1b1cea69f733d585f6fb469ef1787dba04e4cb0e0f85823be04cba1ab007ad2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   flutter_keyboard_visibility:
     dependency: transitive
     description:
@@ -579,6 +587,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.17"
+  flutter_scroll_shadow:
+    dependency: transitive
+    description:
+      name: flutter_scroll_shadow
+      sha256: c0509c642c5077654301fab1fb2260adc94c82a407c60e64162974b4366e7874
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.4"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -877,6 +893,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  linked_scroll_controller:
+    dependency: transitive
+    description:
+      name: linked_scroll_controller
+      sha256: e6020062bcf4ffc907ee7fd090fa971e65d8dfaac3c62baf601a3ced0b37986a
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   lints:
     dependency: transitive
     description:
@@ -1261,6 +1285,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.9"
+  scrollable_table_view:
+    dependency: "direct main"
+    description:
+      name: scrollable_table_view
+      sha256: "4a39767fdf9e76556e7c7bccfa195f5d2b929a188fe2fc7803b3a70e6999fccc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.3"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -1430,26 +1462,26 @@ packages:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_calendar
-      sha256: "31eb2bca4656dac4cd208b41ef0687e19b582272bc40414d7000384c1c9b5cae"
+      sha256: ffea7cc7471f4a0095467a92558d65825fb542ce312d00c904a1a38c29e84968
       url: "https://pub.dev"
     source: hosted
-    version: "21.2.10"
+    version: "24.2.7"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: "8db8f55c77f56968681447d3837c10f27a9e861e238a898fda116c7531def979"
+      sha256: "9f98e2726af42967497eaef68f3373261700bbfcd33bd97da4ec85cb56fcdaf7"
       url: "https://pub.dev"
     source: hosted
-    version: "21.2.10"
+    version: "24.2.7"
   syncfusion_flutter_datepicker:
     dependency: transitive
     description:
       name: syncfusion_flutter_datepicker
-      sha256: "6b0dacfe2f968de2b9107e2dc24fcaa2499415ae655df8f0d3ad0356eb090213"
+      sha256: "0568420166624e85bd5e42c730e972451bca1838d85024e1ecb4583b520175f2"
       url: "https://pub.dev"
     source: hosted
-    version: "21.2.10"
+    version: "24.2.7"
   synchronized:
     dependency: transitive
     description:

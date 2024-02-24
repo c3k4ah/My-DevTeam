@@ -5,10 +5,10 @@ import '../../../../core/usecase/usecase.dart';
 import '../entities/project.entity.dart';
 import '../repositories/project.domain.repo.dart';
 
-class GetAllProjects implements Usecase<List<ProjectEntity>, NoParams> {
-  final ProjectDomainRepo domainRepo;
+class GetAllProjectsUseCase implements Usecase<List<ProjectEntity>, NoParams> {
+  final ProjectRepository domainRepo;
 
-  GetAllProjects(this.domainRepo);
+  GetAllProjectsUseCase(this.domainRepo);
 
   @override
   Future<Either<Failure, List<ProjectEntity>>> call(NoParams params) {

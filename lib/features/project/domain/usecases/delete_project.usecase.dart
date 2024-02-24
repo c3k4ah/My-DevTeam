@@ -4,13 +4,13 @@ import '../../../../core/error/failure.dart';
 import '../../../../core/usecase/usecase.dart';
 import '../repositories/project.domain.repo.dart';
 
-class DeleteProject extends Usecase<void, int> {
-  final ProjectDomainRepo domainRepo;
+class DeleteProjectUseCase extends Usecase<void, String> {
+  final ProjectRepository domainRepo;
 
-  DeleteProject({required this.domainRepo});
+  DeleteProjectUseCase(this.domainRepo);
 
   @override
-  Future<Either<Failure, void>> call(int params) {
+  Future<Either<Failure, void>> call(String params) {
     return domainRepo.deleteProject(id: params);
   }
 }

@@ -1,19 +1,33 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mydevteam/features/home/presentation/manager/home_bloc.dart';
 
 // import '../../../../core/styles/app_colors.dart';
 
 import 'widget/card/card.dart';
-import 'widget/edt.dart';
+// ignore: unused_import
+import 'widget/chedule.dart';
 import 'widget/calendar_header.dart';
-import 'widget/widgetwithcalendar/calendar.dart';
+import 'widget/mini_calendar/calendar.dart';
 
-import 'widget/widgetwithcalendar/doctor.dart';
-import 'widget/widgetwithcalendar/someone.dart';
+import 'widget/mini_calendar/doctor.dart';
+import 'widget/mini_calendar/someone.dart';
 
 @RoutePage()
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    context.read<HomeBloc>().add(GetUserEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +56,7 @@ class HomePage extends StatelessWidget {
                           SizedBox(
                             height: 10,
                           ),
-                          Expanded(child: Edt())
+                          // Expanded(child: Edt())
                         ],
                       ),
                     ),

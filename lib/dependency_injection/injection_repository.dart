@@ -9,4 +9,14 @@ void repositories() {
       getIt(),
     ),
   );
+  getIt.registerLazySingleton<HomeRepository>(
+    () => HomeRepositoryImpl(
+      getIt(),
+    ),
+  );
+  getIt.registerLazySingleton<ProjectRepository>(
+    () => ProjectRepositoryImpl(
+      getIt(),
+    ),
+  );
 }

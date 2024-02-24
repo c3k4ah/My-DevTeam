@@ -5,10 +5,10 @@ import '../../../../core/usecase/usecase.dart';
 import '../entities/project.entity.dart';
 import '../repositories/project.domain.repo.dart';
 
-class CreateProject extends Usecase<ProjectEntity, ProjectEntity> {
-  final ProjectDomainRepo domainRepo;
+class CreateProjectUseCase extends Usecase<ProjectEntity, ProjectEntity> {
+  final ProjectRepository domainRepo;
 
-  CreateProject({required this.domainRepo});
+  CreateProjectUseCase(this.domainRepo);
   @override
   Future<Either<Failure, ProjectEntity>> call(ProjectEntity params) {
     return domainRepo.createProject(project: params);

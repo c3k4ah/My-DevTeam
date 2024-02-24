@@ -11,4 +11,19 @@ void blocs() {
       getIt(),
     ),
   );
+  getIt.registerLazySingleton<HomeBloc>(
+    () => HomeBloc(
+      getIt(),
+      getIt(),
+    ),
+  );
+  getIt.registerLazySingleton<ProjectBloc>(
+    () => ProjectBloc(
+      getIt(),
+      getIt(),
+      getIt(),
+      getIt(),
+      getIt(),
+    ),
+  );
 }

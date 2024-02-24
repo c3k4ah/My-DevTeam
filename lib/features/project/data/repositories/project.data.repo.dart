@@ -3,14 +3,15 @@ import 'package:dartz/dartz.dart';
 
 import 'package:mydevteam/core/error/failure.dart';
 
+import '../../../../core/utils/log.dart';
 import '../../domain/domaine.dart';
 import '../data.dart';
 
-class ProjectDataRepo implements ProjectDomainRepo {
+class ProjectRepositoryImpl implements ProjectRepository {
   final ProjectRemoteData remoteData;
-  ProjectDataRepo({
-    required this.remoteData,
-  });
+  ProjectRepositoryImpl(
+    this.remoteData,
+  );
 
   @override
   Future<Either<Failure, ProjectEntity>> createProject(
@@ -20,16 +21,18 @@ class ProjectDataRepo implements ProjectDomainRepo {
           project: ProjectModel.fromEntity(project));
       return Right(result);
     } catch (e) {
+      Log.error(e);
       return const Left(ServerFailure());
     }
   }
 
   @override
-  Future<Either<Failure, void>> deleteProject({required int id}) async {
+  Future<Either<Failure, void>> deleteProject({required String id}) async {
     try {
       final result = await remoteData.deleteProject(id: id);
       return Right(result);
     } catch (e) {
+      Log.error(e);
       return const Left(ServerFailure());
     }
   }
@@ -40,17 +43,19 @@ class ProjectDataRepo implements ProjectDomainRepo {
       final result = await remoteData.getAllProjects();
       return Right(result);
     } catch (e) {
+      Log.error(e);
       return const Left(ServerFailure());
     }
   }
 
   @override
   Future<Either<Failure, ProjectEntity>> getProjectById(
-      {required int id}) async {
+      {required String id}) async {
     try {
       final result = await remoteData.getProjectById(id: id);
       return Right(result);
     } catch (e) {
+      Log.error(e);
       return const Left(ServerFailure());
     }
   }
@@ -63,6 +68,7 @@ class ProjectDataRepo implements ProjectDomainRepo {
           project: ProjectModel.fromEntity(project));
       return Right(result);
     } catch (e) {
+      Log.error(e);
       return const Left(ServerFailure());
     }
   }
