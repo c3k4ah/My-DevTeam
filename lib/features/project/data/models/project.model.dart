@@ -15,7 +15,7 @@ class ProjectModel extends ProjectEntity {
     List<String>? managers,
     DateTime? starDate,
     DateTime? endDate,
-    String? progression,
+    int? progression,
   }) : super(
           id: id,
           collectionId: collectionId,
@@ -52,7 +52,7 @@ class ProjectModel extends ProjectEntity {
           json['star_date'] == null ? null : DateTime.parse(json['star_date']),
       endDate:
           json['end_date'] == null ? null : DateTime.parse(json['end_date']),
-      progression: json['progression'] ?? '',
+      progression: json['progression'] ?? 1,
     );
   }
 

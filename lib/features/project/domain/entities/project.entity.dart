@@ -31,7 +31,7 @@ class ProjectEntity extends Equatable {
   final List<String>? managers;
   final DateTime? starDate;
   final DateTime? endDate;
-  final String? progression;
+  final int? progression;
 
   ProjectEntity copyWith({
     String? id,
@@ -47,7 +47,7 @@ class ProjectEntity extends Equatable {
     List<String>? managers,
     DateTime? starDate,
     DateTime? endDate,
-    String? progression,
+    int? progression,
   }) {
     return ProjectEntity(
       id: id ?? this.id,

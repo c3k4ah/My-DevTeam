@@ -36,19 +36,19 @@ class AppRouter extends _$AppRouter {
               },
             ),
             AutoRoute(
-              path: 'calendar',
-              page: CalendarRoute.page,
-              meta: const {
-                'title': 'Calendrier',
-                'icon': Ionicons.calendar,
-              },
-            ),
-            AutoRoute(
               path: 'project',
               page: ProjectRoute.page,
               meta: const {
                 'title': 'Projets',
                 'icon': Ionicons.folder,
+              },
+            ),
+            AutoRoute(
+              path: 'calendar',
+              page: CalendarRoute.page,
+              meta: const {
+                'title': 'Calendrier',
+                'icon': Ionicons.calendar,
               },
             ),
             AutoRoute(

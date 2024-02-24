@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/utils/progression.dart';
+
 class CategorySection extends StatefulWidget {
   const CategorySection({super.key});
 
@@ -8,14 +10,14 @@ class CategorySection extends StatefulWidget {
 }
 
 class _CategorySectionState extends State<CategorySection> {
+  final _prs = ProgressionRepository();
   int selectedIndex = 0;
-  List<String> categories = [
-    'All',
-    'In Progress',
-    'Pending',
-    'Completed',
-    'Backlog',
-  ];
+  List<String> categories = [];
+  @override
+  void initState() {
+    categories = _prs.progressions.map((e) => e.title).toList();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

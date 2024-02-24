@@ -24,8 +24,8 @@ class MainPage extends StatelessWidget {
         );
       },
       routes: const [
-        ProjectRoute(),
         HomeRoute(),
+        ProjectRoute(),
         CalendarRoute(),
         ChatRoute(),
       ],

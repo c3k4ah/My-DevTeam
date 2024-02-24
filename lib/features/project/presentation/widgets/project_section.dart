@@ -4,6 +4,8 @@ import 'package:mydevteam/core/extensions/date_time_extension.dart';
 import 'package:scrollable_table_view/scrollable_table_view.dart';
 import 'package:flutter_expandable_table/flutter_expandable_table.dart';
 
+import '../../../../core/utils/progression.dart';
+
 import '../bloc/project_bloc.dart';
 
 class ProjectSection extends StatefulWidget {
@@ -14,9 +16,12 @@ class ProjectSection extends StatefulWidget {
 }
 
 class _ProjectSectionState extends State<ProjectSection> {
+  final _prs = ProgressionRepository();
+
   @override
   void initState() {
     context.read<ProjectBloc>().add(const ProjectLoadEvent());
+
     super.initState();
   }
 
@@ -43,58 +48,100 @@ class _ProjectSectionState extends State<ProjectSection> {
               );
             case ProjectStatus.loaded:
               return ScrollableTableView(
-                paginationController: PaginationController(
-                  rowCount: state.projects.length,
-                  rowsPerPage: 10,
-                ),
-                headers: [
-                  'Title',
-                  'Progression',
-                  'Members',
-                  'StarDate',
-                  'EndDate',
-                  'Created',
-                ].map((label) {
-                  return TableViewHeader(
-                    width: 220,
-                    alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.only(left: 10),
-                    label: label,
-                  );
-                }).toList(),
-                rows: [
-                  ...state.projects.map((project) {
-                    return <String>[
-                      project.title ?? '',
-                      project.progression ?? '',
-                      project.members?.length.toString() ?? '',
-                      (project.starDate == null
-                              ? ''
-                              : project.starDate?.formatToHuman)
-                          .toString(),
-                      (project.endDate == null
-                              ? ''
-                              : project.endDate?.formatToHuman)
-                          .toString(),
-                      (project.created == null
-                              ? ''
-                              : project.created?.formatToHuman)
-                          .toString(),
-                    ];
+                  paginationController: PaginationController(
+                    rowCount: state.projects.length,
+                    rowsPerPage: 10,
+                  ),
+                  headers: [
+                    'Title',
+                    'Members',
+                    'Star date',
+                    'Deadline',
+                    'Date created',
+                    'Status',
+                  ].map((label) {
+                    return TableViewHeader(
+                      width: 220,
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.only(left: 10),
+                      label: label,
+                    );
                   }).toList(),
-                ].map((record) {
-                  return TableViewRow(
-                    height: 60,
-                    cells: record.map((value) {
-                      return TableViewCell(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  );
-                }).toList(),
-              );
+                  rows: List.generate(state.projects.length, (index) {
+                    return TableViewRow(
+                      cells: [
+                        TableViewCell(
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Text(state.projects[index].title ?? ''),
+                        ),
+                        TableViewCell(
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Text(
+                            state.projects[index].members?.length.toString() ??
+                                '',
+                          ),
+                        ),
+                        TableViewCell(
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Text(
+                            (state.projects[index].starDate == null
+                                    ? ''
+                                    : state.projects[index].starDate
+                                        ?.formatToHuman)
+                                .toString(),
+                          ),
+                        ),
+                        TableViewCell(
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Text(
+                            (state.projects[index].endDate == null
+                                    ? ''
+                                    : state
+                                        .projects[index].endDate?.formatToHuman)
+                                .toString(),
+                          ),
+                        ),
+                        TableViewCell(
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Text(
+                            (state.projects[index].created == null
+                                    ? ''
+                                    : state
+                                        .projects[index].created?.formatToHuman)
+                                .toString(),
+                          ),
+                        ),
+                        TableViewCell(
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 15),
+                            decoration: BoxDecoration(
+                              color: _prs.getProgressionColorByStatus(
+                                  state.projects[index].progression ?? 5),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Text(
+                              _prs
+                                  .getProgressionByStatus(
+                                      state.projects[index].progression ?? 5)
+                                  .toString(),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }));
             case ProjectStatus.error:
               return Center(
                 child: Text(state.errorMessage),
@@ -147,3 +194,40 @@ class _ProjectSectionState extends State<ProjectSection> {
     );
   }
 }
+/**
+[
+                  ...state.projects.map((project) {
+                    return <String>[
+                      project.title ?? '',
+                      _prs
+                          .getProgressionByStatus(project.progression ?? 5)
+                          .toString(),
+                      project.members?.length.toString() ?? '',
+                      (project.starDate == null
+                              ? ''
+                              : project.starDate?.formatToHuman)
+                          .toString(),
+                      (project.endDate == null
+                              ? ''
+                              : project.endDate?.formatToHuman)
+                          .toString(),
+                      (project.created == null
+                              ? ''
+                              : project.created?.formatToHuman)
+                          .toString(),
+                    ];
+                  }).toList(),
+                ].map((record) {
+                  return TableViewRow(
+                    height: 60,
+                    cells: record.map((value) {
+                      return TableViewCell(
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  );
+                }).toList(), 
+ 
+ */
