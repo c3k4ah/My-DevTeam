@@ -17,7 +17,7 @@ class Sidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 700,
+      height: MediaQuery.sizeOf(context).height,
       width: 70,
       decoration: const BoxDecoration(
         // borderRadius: BorderRadius.circular(15),

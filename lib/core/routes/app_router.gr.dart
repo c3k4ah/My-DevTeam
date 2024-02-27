@@ -51,6 +51,22 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const MainPage(),
       );
     },
+    ProjectDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<ProjectDetailsRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ProjectDetailsPage(
+          key: args.key,
+          project: args.project,
+        ),
+      );
+    },
+    ProjectNavigationRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ProjectNavigationPage(),
+      );
+    },
     ProjectRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -140,6 +156,58 @@ class MainRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'MainRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProjectDetailsPage]
+class ProjectDetailsRoute extends PageRouteInfo<ProjectDetailsRouteArgs> {
+  ProjectDetailsRoute({
+    Key? key,
+    required ProjectEntity project,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ProjectDetailsRoute.name,
+          args: ProjectDetailsRouteArgs(
+            key: key,
+            project: project,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ProjectDetailsRoute';
+
+  static const PageInfo<ProjectDetailsRouteArgs> page =
+      PageInfo<ProjectDetailsRouteArgs>(name);
+}
+
+class ProjectDetailsRouteArgs {
+  const ProjectDetailsRouteArgs({
+    this.key,
+    required this.project,
+  });
+
+  final Key? key;
+
+  final ProjectEntity project;
+
+  @override
+  String toString() {
+    return 'ProjectDetailsRouteArgs{key: $key, project: $project}';
+  }
+}
+
+/// generated route for
+/// [ProjectNavigationPage]
+class ProjectNavigationRoute extends PageRouteInfo<void> {
+  const ProjectNavigationRoute({List<PageRouteInfo>? children})
+      : super(
+          ProjectNavigationRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProjectNavigationRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

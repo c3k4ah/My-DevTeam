@@ -4,7 +4,7 @@ import 'package:provider/single_child_widget.dart';
 
 import '../features/auth/presentation/sign_in/manager/sign_in_bloc.dart';
 import '../features/home/presentation/manager/home_bloc.dart';
-import '../features/project/presentation/bloc/project_bloc.dart';
+import '../features/project/presentation/manager/project_bloc.dart';
 
 final getIt = GetIt.instance;
 

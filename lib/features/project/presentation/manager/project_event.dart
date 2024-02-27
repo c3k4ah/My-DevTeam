@@ -46,3 +46,39 @@ class ProjectDeleteEvent extends ProjectEvent {
   @override
   List<Object> get props => [project];
 }
+
+class ProjectLoadAllTaskEvent extends ProjectEvent {
+  const ProjectLoadAllTaskEvent(this.taskIds);
+
+  final List<String> taskIds;
+
+  @override
+  List<Object> get props => [taskIds];
+}
+
+class ProjectUpdateTaskEvent extends ProjectEvent {
+  const ProjectUpdateTaskEvent(this.task);
+
+  final TaskEntity task;
+
+  @override
+  List<Object> get props => [task];
+}
+
+class ProjectDeleteTaskEvent extends ProjectEvent {
+  const ProjectDeleteTaskEvent(this.task);
+
+  final TaskEntity task;
+
+  @override
+  List<Object> get props => [task];
+}
+
+class ProjectCreateTaskEvent extends ProjectEvent {
+  const ProjectCreateTaskEvent(this.task);
+
+  final TaskEntity task;
+
+  @override
+  List<Object> get props => [task];
+}

@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import '../../features/auth/presentation/auth_navigation_page.dart';
 import '../../features/auth/presentation/sign_in/pages/login_page.dart';
@@ -7,7 +8,10 @@ import '../../features/chat/presentation/pages/chat_screen.dart';
 import '../../features/event/presentation/pages/calendar_screen.dart';
 import '../../features/home/presentation/pages/home.dart';
 import '../../features/main_screen/presentation/pages/main_screen.dart';
-import '../../features/project/presentation/pages/project_screen.dart';
+import '../../features/project/domain/entities/project.entity.dart';
+import '../../features/project/presentation/pages/project_details_page.dart';
+import '../../features/project/presentation/pages/project_list_screen.dart';
+import '../../features/project/presentation/pages/project_navigation_page.dart';
 import 'guards/auth_guard.dart';
 
 part 'app_router.gr.dart';
@@ -37,11 +41,19 @@ class AppRouter extends _$AppRouter {
             ),
             AutoRoute(
               path: 'project',
-              page: ProjectRoute.page,
               meta: const {
                 'title': 'Projets',
                 'icon': Ionicons.folder,
               },
+              page: ProjectNavigationRoute.page,
+              children: [
+                AutoRoute(
+                  page: ProjectDetailsRoute.page,
+                ),
+                AutoRoute(
+                  page: ProjectRoute.page,
+                ),
+              ],
             ),
             AutoRoute(
               path: 'calendar',

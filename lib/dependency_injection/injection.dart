@@ -35,7 +35,7 @@ import '../features/home/domain/repositories/repository.dart';
 import '../features/home/domain/usecases/usecases.dart';
 import '../features/home/presentation/manager/home_bloc.dart';
 import '../features/project/data/datasources/project.remotedata.impl.dart';
-import '../features/project/presentation/bloc/project_bloc.dart';
+import '../features/project/presentation/manager/project_bloc.dart';
 
 part 'injection_bloc.dart';
 

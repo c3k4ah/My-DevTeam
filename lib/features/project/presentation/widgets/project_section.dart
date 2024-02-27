@@ -1,12 +1,14 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mydevteam/core/extensions/date_time_extension.dart';
+import 'package:mydevteam/features/project/domain/domaine.dart';
 import 'package:scrollable_table_view/scrollable_table_view.dart';
-import 'package:flutter_expandable_table/flutter_expandable_table.dart';
 
+import '../../../../core/routes/app_router.dart';
 import '../../../../core/utils/progression.dart';
 
-import '../bloc/project_bloc.dart';
+import '../manager/project_bloc.dart';
 
 class ProjectSection extends StatefulWidget {
   const ProjectSection({super.key});
@@ -44,9 +46,16 @@ class _ProjectSectionState extends State<ProjectSection> {
           switch (state.status) {
             case ProjectStatus.loading:
               return const Center(
-                child: CircularProgressIndicator(),
+                child: SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(
+                    color: Colors.blue,
+                    strokeWidth: 3,
+                  ),
+                ),
               );
-            case ProjectStatus.loaded:
+            case ProjectStatus.loaded || ProjectStatus.initial:
               return ScrollableTableView(
                   paginationController: PaginationController(
                     rowCount: state.projects.length,
@@ -68,29 +77,32 @@ class _ProjectSectionState extends State<ProjectSection> {
                     );
                   }).toList(),
                   rows: List.generate(state.projects.length, (index) {
+                    ProjectEntity project = state.projects[index];
                     return TableViewRow(
+                      onTap: () {
+                        context
+                            .pushRoute(ProjectDetailsRoute(project: project));
+                      },
                       cells: [
                         TableViewCell(
                           alignment: Alignment.centerLeft,
                           padding: const EdgeInsets.only(left: 10),
-                          child: Text(state.projects[index].title ?? ''),
+                          child: Text(project.title ?? ''),
                         ),
                         TableViewCell(
                           alignment: Alignment.centerLeft,
                           padding: const EdgeInsets.only(left: 10),
                           child: Text(
-                            state.projects[index].members?.length.toString() ??
-                                '',
+                            '${project.members?.length}${project.members!.length <= 1 ? ' executor' : ' executors'}',
                           ),
                         ),
                         TableViewCell(
                           alignment: Alignment.centerLeft,
                           padding: const EdgeInsets.only(left: 10),
                           child: Text(
-                            (state.projects[index].starDate == null
+                            (project.starDate == null
                                     ? ''
-                                    : state.projects[index].starDate
-                                        ?.formatToHuman)
+                                    : project.starDate?.formatToHuman)
                                 .toString(),
                           ),
                         ),
@@ -98,10 +110,9 @@ class _ProjectSectionState extends State<ProjectSection> {
                           alignment: Alignment.centerLeft,
                           padding: const EdgeInsets.only(left: 10),
                           child: Text(
-                            (state.projects[index].endDate == null
+                            (project.endDate == null
                                     ? ''
-                                    : state
-                                        .projects[index].endDate?.formatToHuman)
+                                    : project.endDate?.formatToHuman)
                                 .toString(),
                           ),
                         ),
@@ -109,10 +120,9 @@ class _ProjectSectionState extends State<ProjectSection> {
                           alignment: Alignment.centerLeft,
                           padding: const EdgeInsets.only(left: 10),
                           child: Text(
-                            (state.projects[index].created == null
+                            (project.created == null
                                     ? ''
-                                    : state
-                                        .projects[index].created?.formatToHuman)
+                                    : project.created?.formatToHuman)
                                 .toString(),
                           ),
                         ),
@@ -124,13 +134,13 @@ class _ProjectSectionState extends State<ProjectSection> {
                                 vertical: 5, horizontal: 15),
                             decoration: BoxDecoration(
                               color: _prs.getProgressionColorByStatus(
-                                  state.projects[index].progression ?? 5),
+                                  project.progression ?? 5),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: Text(
                               _prs
                                   .getProgressionByStatus(
-                                      state.projects[index].progression ?? 5)
+                                      project.progression ?? 5)
                                   .toString(),
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -155,79 +165,4 @@ class _ProjectSectionState extends State<ProjectSection> {
       ),
     );
   }
-
-  ExpandableTableRow rowWidget() {
-    return ExpandableTableRow(
-      firstCell: cellWidget('title'),
-      legend: const Text('legend'),
-    );
-  }
-
-  ExpandableTableHeader cellHeaderWidget(String title) {
-    return ExpandableTableHeader(cell: cellWidget(title));
-  }
-
-  ExpandableTableCell cellWidget(String title) {
-    return ExpandableTableCell(
-      builder: (context, details) {
-        return Container(
-          padding: const EdgeInsets.all(10),
-          height: 70,
-          decoration: const BoxDecoration(
-            color: Colors.red,
-            border: Border(
-              right: BorderSide(
-                color: Colors.black,
-                width: 1,
-              ),
-            ),
-          ),
-          child: Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
-        );
-      },
-    );
-  }
 }
-/**
-[
-                  ...state.projects.map((project) {
-                    return <String>[
-                      project.title ?? '',
-                      _prs
-                          .getProgressionByStatus(project.progression ?? 5)
-                          .toString(),
-                      project.members?.length.toString() ?? '',
-                      (project.starDate == null
-                              ? ''
-                              : project.starDate?.formatToHuman)
-                          .toString(),
-                      (project.endDate == null
-                              ? ''
-                              : project.endDate?.formatToHuman)
-                          .toString(),
-                      (project.created == null
-                              ? ''
-                              : project.created?.formatToHuman)
-                          .toString(),
-                    ];
-                  }).toList(),
-                ].map((record) {
-                  return TableViewRow(
-                    height: 60,
-                    cells: record.map((value) {
-                      return TableViewCell(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  );
-                }).toList(), 
- 
- */

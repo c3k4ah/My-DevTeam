@@ -57,4 +57,19 @@ void usecases() {
       getIt(),
     ),
   );
+  getIt.registerLazySingleton<GetAllTaskUseCase>(
+    () => GetAllTaskUseCase(
+      getIt(),
+    ),
+  );
+  getIt.registerLazySingleton<UpdateTaskUseCase>(
+    () => UpdateTaskUseCase(
+      getIt(),
+    ),
+  );
+  getIt.registerLazySingleton<CreateTaskUseCase>(
+    () => CreateTaskUseCase(
+      getIt(),
+    ),
+  );
 }

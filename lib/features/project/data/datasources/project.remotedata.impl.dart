@@ -1,3 +1,4 @@
+import 'package:mydevteam/core/DTO/models/task_model.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 import '../../../../core/source/remote/pocket_base_source.dart';
@@ -54,5 +55,38 @@ class ProjectDataSourceImpl implements ProjectRemoteData {
       body: project.toJson(),
     );
     return ProjectModel.fromJson(result.data);
+  }
+
+  @override
+  Future<List<TaskModel>> getAllTasks({required List<String> tasksId}) async {
+    String filter = tasksId.map((id) => 'id = "$id"').join(' || ');
+    final result = await pbSource.getAll(
+      collectionName: 'task',
+      filter: 'projectId = "${tasksId.first}"',
+    );
+    List<TaskModel> data = result.data
+        .map<TaskModel>((RecordModel e) => TaskModel.fromJson(e.toJson()))
+        .toList();
+    return data;
+  }
+
+  @override
+  Future<TaskModel> updateTask({required TaskModel task}) async {
+    final result = await pbSource.update(
+      collectionName: 'task',
+      recordId: task.id ?? '',
+      body: task.toJson(),
+    );
+    return TaskModel.fromJson(result.data);
+  }
+
+  @override
+  Future<TaskModel> createTask({required TaskModel task}) async {
+    final result = await pbSource.create(
+      collectionName: 'task',
+      body: task.toJson(),
+    );
+    RecordModel record = result.data;
+    return TaskModel.fromJson(record.toJson());
   }
 }

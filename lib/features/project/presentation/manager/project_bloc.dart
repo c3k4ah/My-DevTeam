@@ -2,6 +2,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../../core/DTO/entities/task_entity.dart';
 import '../../../../core/usecase/usecase.dart';
 import '../../domain/domaine.dart';
 
@@ -9,12 +10,14 @@ part 'project_event.dart';
 part 'project_state.dart';
 
 class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
-  // on a besoin de nos usecases pour faire le lien avec le domaine et la data
   final GetAllProjectsUseCase getAllProjects;
   final GetProjectByIdUseCase getProjectById;
   final CreateProjectUseCase createProject;
   final UpdateProjectUseCase updateProject;
   final DeleteProjectUseCase deleteProject;
+  final GetAllTaskUseCase getAllTasks;
+  final UpdateTaskUseCase updateTask;
+  final CreateTaskUseCase createTask;
 
   ProjectBloc(
     this.getAllProjects,
@@ -22,6 +25,9 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     this.createProject,
     this.updateProject,
     this.deleteProject,
+    this.getAllTasks,
+    this.updateTask,
+    this.createTask,
   ) : super(ProjectInitial()) {
     // c'est ici que l'on va gérer les événements qui vont être émis par le bloc
     on<ProjectLoadEvent>(_onProjectLoadEvent);
@@ -29,6 +35,9 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     on<ProjectCreateEvent>(_onProjectCreateEvent);
     on<ProjectUpdateEvent>(_onProjectUpdateEvent);
     on<ProjectDeleteEvent>(_onProjectDeleteEvent);
+    on<ProjectCreateTaskEvent>(_onProjectCreateTaskEvent);
+    on<ProjectUpdateTaskEvent>(_onProjectUpdateTaskEvent);
+    on<ProjectLoadAllTaskEvent>(_onProjectLoadAllTaskEvent);
   }
 
   Future<void> _onProjectLoadEvent(
@@ -41,11 +50,14 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
           status: ProjectStatus.error,
           errorMessage: failure.message,
         ));
-        print(failure.message);
       },
       (projects) {
-        emit(state.copyWith(status: ProjectStatus.loaded, projects: projects));
-        print(projects.length);
+        emit(
+          state.copyWith(
+            status: ProjectStatus.loaded,
+            projects: projects,
+          ),
+        );
       },
     );
   }
@@ -117,6 +129,63 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
         status: ProjectStatus.loaded,
         projects: [...state.projects, project],
       )),
+    );
+  }
+
+  Future<void> _onProjectCreateTaskEvent(
+      ProjectCreateTaskEvent event, Emitter<ProjectState> emit) async {
+    emit(state.copyWith(status: ProjectStatus.loading));
+    final result = await createTask(event.task);
+    result.fold(
+      (failure) => emit(state.copyWith(
+        status: ProjectStatus.error,
+        errorMessage: failure.message,
+      )),
+      (task) => emit(state.copyWith(
+        status: ProjectStatus.loaded,
+        tasks: [...state.tasks, task],
+      )),
+    );
+  }
+
+  Future<void> _onProjectUpdateTaskEvent(
+      ProjectUpdateTaskEvent event, Emitter<ProjectState> emit) async {
+    emit(state.copyWith(status: ProjectStatus.loading));
+    final result = await updateTask(event.task);
+    result.fold(
+      (failure) => emit(state.copyWith(
+        status: ProjectStatus.error,
+        errorMessage: failure.message,
+      )),
+      (task) {
+        emit(state.copyWith(
+          status: ProjectStatus.loaded,
+          tasks: [
+            for (final item in state.tasks)
+              if (item.id == task.id) task else item
+          ],
+        ));
+        print(task.title);
+      },
+    );
+  }
+
+  Future<void> _onProjectLoadAllTaskEvent(
+      ProjectLoadAllTaskEvent event, Emitter<ProjectState> emit) async {
+    emit(state.copyWith(status: ProjectStatus.loading));
+    final result = await getAllTasks(event.taskIds);
+    result.fold(
+      (failure) => emit(state.copyWith(
+        status: ProjectStatus.error,
+        errorMessage: failure.message,
+      )),
+      (tasks) {
+        emit(state.copyWith(
+          status: ProjectStatus.loaded,
+          tasks: tasks,
+        ));
+        print(tasks.length);
+      },
     );
   }
 }

@@ -18,6 +18,7 @@ class SearchBarWidget extends StatelessWidget {
           prefixIcon: Icon(
             Ionicons.search,
             color: Colors.black38,
+            size: 20,
           ),
           hintText: 'Search for a project',
           border: InputBorder.none,

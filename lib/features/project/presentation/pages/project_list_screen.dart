@@ -26,7 +26,10 @@ class ProjectScreen extends StatelessWidget {
             splashColor: Colors.transparent,
             focusColor: Colors.transparent,
             child: Container(
-              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+              margin: const EdgeInsets.symmetric(
+                vertical: 8,
+                horizontal: 10,
+              ),
               width: 150,
               height: 50,
               decoration: BoxDecoration(

@@ -16,17 +16,17 @@ class Progression {
 class ProgressionRepository {
   final List<Progression> _progressions = [
     Progression(title: 'All', status: 0),
+    Progression(title: 'To Do', status: 5),
     Progression(title: 'In Progress', status: 1),
     Progression(title: 'Pending', status: 2),
     Progression(title: 'Completed', status: 3),
     Progression(title: 'In Review', status: 4),
-    Progression(title: 'Backlog', status: 5),
   ];
 
   List<Progression> get progressions => _progressions;
 
   Progression getProgressionByStatus(int status) {
-    if (status > 5 || status < 0) return _progressions.last;
+    if (status > 5 || status < 0) return _progressions[1];
     return _progressions.firstWhere((element) => element.status == status);
   }
 
@@ -41,7 +41,7 @@ class ProgressionRepository {
       case 4:
         return Colors.deepOrange;
       case 5:
-        return Colors.grey;
+        return Colors.purple;
       default:
         return Colors.black26;
     }

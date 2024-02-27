@@ -29,19 +29,16 @@ ThemeData theme = ThemeData(
       splashFactory: NoSplash.splashFactory,
     ),
   ),
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
     elevation: 0,
     titleTextStyle: TextStyle(
-      color: primaryColor,
+      color: Colors.black,
       fontSize: 24,
       fontWeight: FontWeight.w700,
     ),
     backgroundColor: Colors.transparent,
     iconTheme: IconThemeData(
-      color: primaryColor,
-    ),
-    actionsIconTheme: IconThemeData(
-      color: primaryColor,
+      color: Colors.black,
     ),
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(

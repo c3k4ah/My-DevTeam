@@ -10,3 +10,6 @@ export 'usecases/delete_project.usecase.dart';
 export 'usecases/get_all_projects.usecase.dart';
 export 'usecases/get_project_by_id.usecase.dart';
 export 'usecases/update_project.usecase.dart';
+export 'usecases/create_task_usecase.dart';
+export 'usecases/get_all_task_usecase.dart';
+export 'usecases/update_task_usecase.dart';
