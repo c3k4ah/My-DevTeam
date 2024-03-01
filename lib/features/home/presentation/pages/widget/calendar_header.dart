@@ -23,26 +23,26 @@ class HeaderCalendar extends StatelessWidget {
           ),
           Row(
             children: [
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  width: 150,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.blue,
-                  ),
-                  child: const Center(
-                    child: Text(
-                      '+ Nouveau projet',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
+              // InkWell(
+              //   onTap: () {},
+              //   child: Container(
+              //     width: 150,
+              //     height: 50,
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(15),
+              //       color: Colors.blue,
+              //     ),
+              //     child: const Center(
+              //       child: Text(
+              //         '+ Nouveau projet',
+              //         style: TextStyle(color: Colors.white),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(
+              //   width: 10,
+              // ),
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
@@ -55,10 +55,10 @@ class HeaderCalendar extends StatelessWidget {
                   size: 20,
                 ),
               ),
-              const SizedBox(
-                width: 10,
-              ),
-              const UserProfilePhotoWidget(),
+              // const SizedBox(
+              //   width: 10,
+              // ),
+              // const UserProfilePhotoWidget(),
               const SizedBox(
                 width: 10,
               ),
