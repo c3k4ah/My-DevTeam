@@ -21,7 +21,7 @@ dependencies:
   transparent_image: ^2.0.1
   clean_calendar: ^1.1.0
   table_calendar: ^3.0.6
-  syncfusion_flutter_calendar: 
+  syncfusion_flutter_calendar : 
   scrollable_table_view: ^2.0.3
   ionicons: ^0.2.2
   appflowy_board: ^0.1.1
@@ -73,6 +73,7 @@ dependencies:
   flutter_osm_plugin: ^0.70.4
   pointer_interceptor: ^0.10.1
   flutter_typeahead: ^5.0.2
+  calendar_view: ^1.1.0
   
   
 dev_dependencies:

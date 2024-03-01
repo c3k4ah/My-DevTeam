@@ -72,4 +72,9 @@ void usecases() {
       getIt(),
     ),
   );
+  getIt.registerLazySingleton<GetAllUsersUseCase>(
+    () => GetAllUsersUseCase(
+      getIt(),
+    ),
+  );
 }

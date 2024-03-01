@@ -1,10 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:mydevteam/core/DTO/entities/user_enetity.dart';
 
 import '../../../../core/DTO/entities/task_entity.dart';
 import '../../../../core/usecase/usecase.dart';
 import '../../domain/domaine.dart';
+import '../../domain/usecases/get_all_user_usecase.dart';
 
 part 'project_event.dart';
 part 'project_state.dart';
@@ -18,6 +20,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   final GetAllTaskUseCase getAllTasks;
   final UpdateTaskUseCase updateTask;
   final CreateTaskUseCase createTask;
+  final GetAllUsersUseCase getUserList;
 
   ProjectBloc(
     this.getAllProjects,
@@ -28,6 +31,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     this.getAllTasks,
     this.updateTask,
     this.createTask,
+    this.getUserList,
   ) : super(ProjectInitial()) {
     // c'est ici que l'on va gérer les événements qui vont être émis par le bloc
     on<ProjectLoadEvent>(_onProjectLoadEvent);
@@ -38,6 +42,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     on<ProjectCreateTaskEvent>(_onProjectCreateTaskEvent);
     on<ProjectUpdateTaskEvent>(_onProjectUpdateTaskEvent);
     on<ProjectLoadAllTaskEvent>(_onProjectLoadAllTaskEvent);
+    on<ProjectLoadAllUserEvent>(_onProjectLoadAllUserEvent);
   }
 
   Future<void> _onProjectLoadEvent(
@@ -142,15 +147,15 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
         errorMessage: failure.message,
       )),
       (task) => emit(state.copyWith(
-        status: ProjectStatus.loaded,
         tasks: [...state.tasks, task],
+        status: ProjectStatus.loaded,
       )),
     );
   }
 
   Future<void> _onProjectUpdateTaskEvent(
       ProjectUpdateTaskEvent event, Emitter<ProjectState> emit) async {
-    emit(state.copyWith(status: ProjectStatus.loading));
+    // emit(state.copyWith(status: ProjectStatus.loading));
     final result = await updateTask(event.task);
     result.fold(
       (failure) => emit(state.copyWith(
@@ -165,7 +170,6 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
               if (item.id == task.id) task else item
           ],
         ));
-        print(task.title);
       },
     );
   }
@@ -184,7 +188,27 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
           status: ProjectStatus.loaded,
           tasks: tasks,
         ));
-        print(tasks.length);
+      },
+    );
+  }
+
+  Future<void> _onProjectLoadAllUserEvent(
+      ProjectLoadAllUserEvent event, Emitter<ProjectState> emit) async {
+    emit(state.copyWith(status: ProjectStatus.loading));
+    final result = await getUserList(NoParams());
+    result.fold(
+      (failure) => emit(state.copyWith(
+        status: ProjectStatus.error,
+        errorMessage: failure.message,
+      )),
+      (users) {
+        emit(
+          state.copyWith(
+            status: ProjectStatus.loaded,
+            users: users,
+          ),
+        );
+        // print(users);
       },
     );
   }

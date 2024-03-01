@@ -82,3 +82,10 @@ class ProjectCreateTaskEvent extends ProjectEvent {
   @override
   List<Object> get props => [task];
 }
+
+class ProjectLoadAllUserEvent extends ProjectEvent {
+  const ProjectLoadAllUserEvent();
+
+  @override
+  List<Object> get props => [];
+}

@@ -21,7 +21,7 @@ ThemeData theme = ThemeData(
       alignment: Alignment.centerLeft,
       shadowColor: Colors.transparent,
       surfaceTintColor: Colors.transparent,
-      foregroundColor: Colors.transparent,
+      // foregroundColor: Colors.transparent,
       elevation: 0,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.zero,
@@ -55,42 +55,42 @@ ThemeData theme = ThemeData(
   ),
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(15),
+      borderRadius: BorderRadius.circular(10),
       borderSide: const BorderSide(
         color: Color(0xFFE0E0E1),
         width: 1,
       ),
     ),
     enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(15),
+      borderRadius: BorderRadius.circular(10),
       borderSide: const BorderSide(
         color: Color(0xFFE0E0E1),
         width: 1,
       ),
     ),
     focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(15),
+      borderRadius: BorderRadius.circular(10),
       borderSide: const BorderSide(
         color: Color(0xFFE0E0E1),
         width: 1,
       ),
     ),
     errorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(15),
+      borderRadius: BorderRadius.circular(10),
       borderSide: const BorderSide(
         color: Color(0xFFE0E0E1),
         width: 1,
       ),
     ),
     focusedErrorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(15),
+      borderRadius: BorderRadius.circular(10),
       borderSide: const BorderSide(
         color: Color(0xFFE0E0E1),
         width: 1,
       ),
     ),
     disabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(15),
+      borderRadius: BorderRadius.circular(10),
       borderSide: const BorderSide(
         color: Color(0xFFE0E0E1),
         width: 1,

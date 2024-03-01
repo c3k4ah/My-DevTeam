@@ -1,14 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mydevteam/core/extensions/date_time_extension.dart';
 import 'package:mydevteam/features/project/domain/domaine.dart';
 import 'package:scrollable_table_view/scrollable_table_view.dart';
 
 import '../../../../core/routes/app_router.dart';
-import '../../../../core/utils/progression.dart';
 
 import '../manager/project_bloc.dart';
+import 'delete_project_dialogue.dart';
 
 class ProjectSection extends StatefulWidget {
   const ProjectSection({super.key});
@@ -18,8 +19,6 @@ class ProjectSection extends StatefulWidget {
 }
 
 class _ProjectSectionState extends State<ProjectSection> {
-  final _prs = ProgressionRepository();
-
   @override
   void initState() {
     context.read<ProjectBloc>().add(const ProjectLoadEvent());
@@ -35,11 +34,20 @@ class _ProjectSectionState extends State<ProjectSection> {
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          style: BorderStyle.solid,
-          width: 3,
-          color: Colors.blue.withOpacity(.3),
-        ),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(.1),
+            blurRadius: 10,
+            spreadRadius: 0,
+            offset: const Offset(-3, 3),
+          )
+        ],
+        // border: Border.all(
+        //   style: BorderStyle.solid,
+        //   width: 3,
+        //   color: Colors.blue.withOpacity(.3),
+        // ),
       ),
       child: BlocBuilder<ProjectBloc, ProjectState>(
         builder: (context, state) {
@@ -57,26 +65,28 @@ class _ProjectSectionState extends State<ProjectSection> {
               );
             case ProjectStatus.loaded || ProjectStatus.initial:
               return ScrollableTableView(
-                  paginationController: PaginationController(
-                    rowCount: state.projects.length,
-                    rowsPerPage: 10,
-                  ),
-                  headers: [
-                    'Title',
-                    'Members',
-                    'Star date',
-                    'Deadline',
-                    'Date created',
-                    'Status',
-                  ].map((label) {
-                    return TableViewHeader(
-                      width: 220,
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.only(left: 10),
-                      label: label,
-                    );
-                  }).toList(),
-                  rows: List.generate(state.projects.length, (index) {
+                paginationController: PaginationController(
+                  rowCount: state.projects.length,
+                  rowsPerPage: 10,
+                ),
+                headers: [
+                  'Titre',
+                  'Membres',
+                  'Date du debut',
+                  'Deadline',
+                  'Date de creation',
+                  'Modification',
+                ].map((label) {
+                  return TableViewHeader(
+                    width: 220,
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.only(left: 10),
+                    label: label,
+                  );
+                }).toList(),
+                rows: List.generate(
+                  state.projects.length,
+                  (index) {
                     ProjectEntity project = state.projects[index];
                     return TableViewRow(
                       onTap: () {
@@ -127,23 +137,27 @@ class _ProjectSectionState extends State<ProjectSection> {
                           ),
                         ),
                         TableViewCell(
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 15),
-                            decoration: BoxDecoration(
-                              color: _prs.getProgressionColorByStatus(
-                                  project.progression ?? 5),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Text(
-                              _prs
-                                  .getProgressionByStatus(
-                                      project.progression ?? 5)
-                                  .toString(),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
+                          alignment: Alignment.center,
+                          child: InkWell(
+                            onLongPress: () {
+                              showDeleteProjectDialogue(
+                                context: context,
+                                confirm: () {
+                                  context
+                                      .read<ProjectBloc>()
+                                      .add(ProjectDeleteEvent(project));
+                                },
+                              );
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(6),
+                              decoration: const BoxDecoration(
+                                color: Colors.redAccent,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Ionicons.trash,
+                                size: 15,
                                 color: Colors.white,
                               ),
                             ),
@@ -151,7 +165,9 @@ class _ProjectSectionState extends State<ProjectSection> {
                         ),
                       ],
                     );
-                  }));
+                  },
+                ),
+              );
             case ProjectStatus.error:
               return Center(
                 child: Text(state.errorMessage),

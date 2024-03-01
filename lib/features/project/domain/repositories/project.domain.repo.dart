@@ -1,4 +1,5 @@
 import 'package:mydevteam/core/DTO/entities/task_entity.dart';
+import 'package:mydevteam/core/DTO/entities/user_enetity.dart';
 
 import '../domaine.dart';
 import 'package:dartz/dartz.dart';
@@ -18,4 +19,5 @@ abstract class ProjectRepository {
       {required List<String> tasksId});
   Future<Either<Failure, TaskEntity>> updateTask({required TaskEntity task});
   Future<Either<Failure, TaskEntity>> createTask({required TaskEntity task});
+  Future<Either<Failure, List<UserEntity>>> getAllUsers();
 }

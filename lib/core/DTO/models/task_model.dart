@@ -41,11 +41,12 @@ class TaskModel extends TaskEntity {
       description: json['description'],
       members:
           json['members'] == null ? [] : List<String>.from(json['members']),
-      starDate:
-          json['star_date'] == null ? null : DateTime.parse(json['star_date']),
+      starDate: json['start_date'] == null
+          ? null
+          : DateTime.parse(json['start_date']),
       endDate:
           json['end_date'] == null ? null : DateTime.parse(json['end_date']),
-      progression: json['progression'] ?? 1,
+      progression: json['progression'] ?? 5,
     );
   }
 
@@ -54,14 +55,14 @@ class TaskModel extends TaskEntity {
       'id': id,
       'collectionId': collectionId,
       'collectionName': collectionName,
-      'created': created,
-      'updated': updated,
+      'created': created?.toIso8601String(),
+      'updated': updated?.toIso8601String(),
       'title': title,
       'description': description,
       'projectId': projectId,
       'members': members,
-      'star_date': starDate,
-      'end_date': endDate,
+      'start_date': starDate?.toIso8601String(),
+      'end_date': endDate?.toIso8601String(),
       'progression': progression,
     };
   }

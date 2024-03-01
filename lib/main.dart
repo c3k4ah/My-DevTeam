@@ -27,7 +27,7 @@ Future<void> main() async {
   await initInjection();
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       builder: (context) => const MyApp(), // Wrap your app
     ),
   );

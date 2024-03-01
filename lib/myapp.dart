@@ -1,3 +1,4 @@
+import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -18,19 +19,22 @@ class MyApp extends StatelessWidget {
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           final router = AppRouter(state.status);
-          return MaterialApp.router(
-            title: 'Diaspora Dating',
-            theme: theme,
-            routerConfig: router.config(),
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const [
-              Locale('fr'),
-            ],
+          return CalendarControllerProvider(
+            controller: EventController(),
+            child: MaterialApp.router(
+              title: 'Diaspora Dating',
+              theme: theme,
+              routerConfig: router.config(),
+              debugShowCheckedModeBanner: false,
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: const [
+                Locale('fr'),
+              ],
+            ),
           );
         },
       ),

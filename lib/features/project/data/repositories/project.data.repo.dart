@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
 import 'package:mydevteam/core/DTO/entities/task_entity.dart';
+import 'package:mydevteam/core/DTO/entities/user_enetity.dart';
 
 import 'package:mydevteam/core/error/failure.dart';
 
@@ -106,6 +107,17 @@ class ProjectRepositoryImpl implements ProjectRepository {
     try {
       final result =
           await remoteData.createTask(task: TaskModel.fromEntity(task));
+      return Right(result);
+    } catch (e) {
+      Log.error(e);
+      return const Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<UserEntity>>> getAllUsers() async {
+    try {
+      final result = await remoteData.getAllUsers();
       return Right(result);
     } catch (e) {
       Log.error(e);

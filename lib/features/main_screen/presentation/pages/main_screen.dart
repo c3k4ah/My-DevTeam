@@ -25,15 +25,16 @@ class MainPage extends StatelessWidget {
       },
       routes: const [
         // ProjectDetailsRoute(
-        //     project: ProjectEntity(
-        //   progression: 2,
-        //   title: "My DevTeam",
-        //   members: const ["memebre 1", "membre 2"],
-        //   description: "Projet de soutenance",
-        //   starDate: DateTime.now(),
-        //   endDate: DateTime.now(),
-        //   created: DateTime.now(),
-        // )),
+        //   project: ProjectEntity(
+        //     progression: 2,
+        //     title: "My DevTeam",
+        //     members: const ["memebre 1", "membre 2"],
+        //     description: "Projet de soutenance",
+        //     starDate: DateTime.now(),
+        //     endDate: DateTime.now(),
+        //     created: DateTime.now(),
+        //   ),
+        // ),
 
         HomeRoute(),
         ProjectRoute(),
@@ -43,6 +44,7 @@ class MainPage extends StatelessWidget {
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
         final activeIndex = tabsRouter.activeIndex;
+
         return Scaffold(
           backgroundColor: const Color.fromARGB(255, 240, 240, 240),
           body: SizedBox(

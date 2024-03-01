@@ -27,6 +27,7 @@ void blocs() {
       getIt(),
       getIt(),
       getIt(),
+      getIt(),
     ),
   );
 }

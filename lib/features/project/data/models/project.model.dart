@@ -64,8 +64,8 @@ class ProjectModel extends ProjectEntity {
       'id': id,
       'collectionId': collectionId,
       'collectionName': collectionName,
-      'created': created,
-      'updated': updated,
+      'created': created?.toIso8601String(),
+      'updated': updated?.toIso8601String(),
       'title': title,
       'description': description,
       'documents': documents,
@@ -73,8 +73,8 @@ class ProjectModel extends ProjectEntity {
       'members': members,
       'sprint': sprint,
       'managers': managers,
-      'star_date': starDate,
-      'end_date': endDate,
+      'star_date': starDate?.toIso8601String(),
+      'end_date': endDate?.toIso8601String(),
       'progression': progression,
     };
   }

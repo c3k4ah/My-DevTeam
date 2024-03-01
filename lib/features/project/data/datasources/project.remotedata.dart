@@ -1,3 +1,5 @@
+import 'package:mydevteam/core/DTO/models/user_model.dart';
+
 import '../../../../core/DTO/models/task_model.dart';
 import '../data.dart';
 
@@ -11,4 +13,5 @@ abstract class ProjectRemoteData {
   Future<List<TaskModel>> getAllTasks({required List<String> tasksId});
   Future<TaskModel> updateTask({required TaskModel task});
   Future<TaskModel> createTask({required TaskModel task});
+  Future<List<UserModel>> getAllUsers();
 }

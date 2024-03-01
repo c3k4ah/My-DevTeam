@@ -47,6 +47,7 @@ class TaskEntity extends Equatable {
       id: id ?? this.id,
       collectionId: collectionId ?? this.collectionId,
       collectionName: collectionName ?? this.collectionName,
+      projectId: projectId ?? this.projectId,
       created: created ?? this.created,
       updated: updated ?? this.updated,
       title: title ?? this.title,
@@ -58,12 +59,30 @@ class TaskEntity extends Equatable {
     );
   }
 
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'collectionId': collectionId,
+      'collectionName': collectionName,
+      'created': created?.toIso8601String(),
+      'updated': updated?.toIso8601String(),
+      'title': title,
+      'description': description,
+      'projectId': projectId,
+      'members': members,
+      'start_date': starDate?.toIso8601String(),
+      'end_date': endDate?.toIso8601String(),
+      'progression': progression,
+    };
+  }
+
   @override
   List<Object?> get props => [
         id,
         collectionId,
         collectionName,
         created,
+        projectId,
         updated,
         title,
         description,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:appflowy_board/appflowy_board.dart';
@@ -6,8 +8,10 @@ import 'package:mydevteam/core/DTO/entities/task_entity.dart';
 import 'package:mydevteam/core/extensions/date_time_extension.dart';
 
 import '../../../../core/utils/progression.dart';
+import '../../../../core/utils/task_json.dart';
 import '../../domain/domaine.dart';
 import '../manager/project_bloc.dart';
+import '../widgets/add_task_dialogue.dart';
 
 @RoutePage()
 class ProjectDetailsPage extends StatefulWidget {
@@ -27,7 +31,6 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
   // List<TaskEntity> tasks = [];
   @override
   void initState() {
-    print(widget.project.tasks?.length);
     context
         .read<ProjectBloc>()
         .add(ProjectLoadAllTaskEvent([widget.project.id ?? '']));
@@ -42,17 +45,12 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
       },
       onMoveGroupItemToGroup: (fromGroupId, fromIndex, toGroupId, toIndex) {
         debugPrint('Task $fromGroupId to $toGroupId');
-        print('========================================');
 
-        print(controller.getGroupController(toGroupId)!.items[toIndex]);
-
+        String taskString =
+            controller.getGroupController(toGroupId)!.items[toIndex].id;
         context.read<ProjectBloc>().add(
               ProjectUpdateTaskEvent(
-                TaskEntity(
-                  id: controller
-                      .getGroupController(toGroupId)!
-                      .items[toIndex]
-                      .id,
+                entityAdapater(taskString).copyWith(
                   progression: int.parse(toGroupId),
                 ),
               ),
@@ -81,6 +79,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
             BlocConsumer<ProjectBloc, ProjectState>(
               listener: (context, state) {
                 if (state.status == ProjectStatus.loaded) {
+                  controller.clear();
                   groupsData = _prs.progressions
                       .map(
                         (Progression e) => AppFlowyGroupData(
@@ -141,21 +140,48 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                         },
                         boardScrollController: boardController,
                         footerBuilder: (context, columnData) {
-                          return AppFlowyGroupFooter(
-                            icon: const Icon(Icons.add, size: 20),
-                            title: const Text('New'),
-                            height: 50,
-                            margin: config.groupPadding,
-                            onAddButtonClick: () {
-                              boardController.scrollToBottom(columnData.id);
-                            },
-                          );
+                          if (columnData.id == '5') {
+                            return AppFlowyGroupFooter(
+                              icon: const Icon(Icons.add, size: 20),
+                              title: const Text('New'),
+                              height: 50,
+                              margin: config.groupPadding,
+                              onAddButtonClick: () {
+                                showAddTaskDialogue(
+                                  context: context,
+                                  onConfirm: (task) {
+                                    TaskEntity newTask = task.copyWith(
+                                      progression: 5,
+                                      projectId: widget.project.id,
+                                    );
+                                    // controller.addGroupItem(
+                                    //   '5',
+                                    //   TaskCard(
+                                    //     newTask.title ?? '',
+                                    //     '${newTask.endDate?.formatToHuman}',
+                                    //     newTask,
+                                    //     newTask.id ?? '',
+                                    //   ),
+                                    // );
+                                    context
+                                        .read<ProjectBloc>()
+                                        .add(ProjectCreateTaskEvent(newTask));
+                                  },
+                                );
+                                // boardController.scrollToBottom(columnData.id);
+                              },
+                            );
+                          } else {
+                            return const SizedBox(
+                              height: 20,
+                            );
+                          }
                         },
                         headerBuilder: (context, columnData) {
                           return AppFlowyGroupHeader(
                             icon: Icon(
                               Icons.lightbulb_circle,
-                              color: _prs.getProgressionColorByStatus(
+                              color: _prs.getColor(
                                   int.parse(columnData.headerData.groupId)),
                             ),
                             title: SizedBox(
@@ -253,5 +279,5 @@ class TaskCard extends AppFlowyGroupItem {
   final TaskEntity task;
   TaskCard(this.title, this.subtitle, this.task, this.taskId);
   @override
-  String get id => taskId;
+  String get id => jsonEncode(task.toMap());
 }

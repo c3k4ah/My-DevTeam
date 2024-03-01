@@ -30,7 +30,7 @@ class ProgressionRepository {
     return _progressions.firstWhere((element) => element.status == status);
   }
 
-  Color getProgressionColorByStatus(int status) {
+  Color getColor(int status) {
     switch (status) {
       case 1:
         return Colors.green;

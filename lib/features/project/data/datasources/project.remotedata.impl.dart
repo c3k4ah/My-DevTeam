@@ -1,4 +1,5 @@
 import 'package:mydevteam/core/DTO/models/task_model.dart';
+import 'package:mydevteam/core/DTO/models/user_model.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 import '../../../../core/source/remote/pocket_base_source.dart';
@@ -35,6 +36,7 @@ class ProjectDataSourceImpl implements ProjectRemoteData {
     List<ProjectModel> data = result.data
         .map<ProjectModel>((RecordModel e) => ProjectModel.fromJson(e.toJson()))
         .toList();
+
     return data;
   }
 
@@ -44,7 +46,8 @@ class ProjectDataSourceImpl implements ProjectRemoteData {
       collectionName: 'project',
       recordId: id,
     );
-    return ProjectModel.fromJson(result.data);
+    RecordModel record = result.data;
+    return ProjectModel.fromJson(record.toJson());
   }
 
   @override
@@ -54,15 +57,15 @@ class ProjectDataSourceImpl implements ProjectRemoteData {
       recordId: project.id ?? '',
       body: project.toJson(),
     );
-    return ProjectModel.fromJson(result.data);
+    RecordModel record = result.data;
+    return ProjectModel.fromJson(record.toJson());
   }
 
   @override
   Future<List<TaskModel>> getAllTasks({required List<String> tasksId}) async {
-    String filter = tasksId.map((id) => 'id = "$id"').join(' || ');
     final result = await pbSource.getAll(
       collectionName: 'task',
-      filter: 'projectId = "${tasksId.first}"',
+      filter: tasksId.isEmpty ? '' : 'projectId = "${tasksId.first}"',
     );
     List<TaskModel> data = result.data
         .map<TaskModel>((RecordModel e) => TaskModel.fromJson(e.toJson()))
@@ -77,7 +80,8 @@ class ProjectDataSourceImpl implements ProjectRemoteData {
       recordId: task.id ?? '',
       body: task.toJson(),
     );
-    return TaskModel.fromJson(result.data);
+    RecordModel record = result.data;
+    return TaskModel.fromJson(record.toJson());
   }
 
   @override
@@ -88,5 +92,18 @@ class ProjectDataSourceImpl implements ProjectRemoteData {
     );
     RecordModel record = result.data;
     return TaskModel.fromJson(record.toJson());
+  }
+
+  @override
+  Future<List<UserModel>> getAllUsers() async {
+    final result = await pbSource.getAll(
+      collectionName: 'users',
+    );
+
+    List<UserModel> data = result.data
+        .map<UserModel>((RecordModel e) => UserModel.fromJson(e.toJson()))
+        .toList();
+
+    return data;
   }
 }

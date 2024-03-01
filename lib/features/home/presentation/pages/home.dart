@@ -7,7 +7,7 @@ import 'package:mydevteam/features/home/presentation/manager/home_bloc.dart';
 
 import 'widget/card/card.dart';
 // ignore: unused_import
-import 'widget/chedule.dart';
+import '../../../event/presentation/pages/chedule.dart';
 import 'widget/calendar_header.dart';
 import 'widget/mini_calendar/calendar.dart';
 
@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(
                             height: 10,
                           ),
-                          // Expanded(child: Edt())
+                          Expanded(child: CalendarEventWidget())
                         ],
                       ),
                     ),

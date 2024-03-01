@@ -8,20 +8,24 @@ class ProjectState extends Equatable {
     required this.status,
     required this.errorMessage,
     required this.tasks,
+    required this.users,
   });
 
   final List<ProjectEntity> projects;
   final List<TaskEntity> tasks;
+  final List<UserEntity> users;
   final ProjectStatus status;
   final String errorMessage;
 
   ProjectState copyWith({
     List<ProjectEntity>? projects,
     List<TaskEntity>? tasks,
+    List<UserEntity>? users,
     ProjectStatus? status,
     String? errorMessage,
   }) {
     return ProjectState(
+      users: users ?? this.users,
       projects: projects ?? this.projects,
       tasks: tasks ?? this.tasks,
       status: status ?? this.status,
@@ -34,6 +38,7 @@ class ProjectState extends Equatable {
         projects,
         tasks,
         status,
+        users,
         errorMessage,
       ];
 }
@@ -43,6 +48,7 @@ class ProjectInitial extends ProjectState {
       : super(
           projects: projectsList,
           tasks: [],
+          users: [],
           status: ProjectStatus.initial,
           errorMessage: '',
         );
