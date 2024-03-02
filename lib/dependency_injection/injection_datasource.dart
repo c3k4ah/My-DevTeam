@@ -24,4 +24,10 @@ void datasources() {
       getIt(),
     ),
   );
+
+  getIt.registerLazySingleton<ChatDataSource>(
+    () => ChatDataSourceImpl(
+      getIt(),
+    ),
+  );
 }

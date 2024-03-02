@@ -30,4 +30,11 @@ void blocs() {
       getIt(),
     ),
   );
+
+  getIt.registerLazySingleton<ChatBloc>(
+    () => ChatBloc(
+      getIt(),
+      getIt(),
+    ),
+  );
 }

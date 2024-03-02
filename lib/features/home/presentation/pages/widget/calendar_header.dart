@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
-import 'user_profile_widget.dart';
-
 class HeaderCalendar extends StatelessWidget {
   const HeaderCalendar({super.key});
 

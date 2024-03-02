@@ -18,16 +18,17 @@ class _ChatScreenState extends State<ChatScreen> {
   bool isDarkTheme = false;
   final currentUser = ChatUser(
     id: '1',
-    name: 'Flutter',
+    name: 'Dominick',
     profilePhoto: Data.profileImage,
   );
+
   final _chatController = ChatController(
     initialMessageList: Data.messageList,
     scrollController: ScrollController(),
     chatUsers: [
       ChatUser(
         id: '2',
-        name: 'Tokey',
+        name: 'Toky',
         profilePhoto: Data.profileImage,
       ),
       ChatUser(
@@ -37,7 +38,7 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       ChatUser(
         id: '4',
-        name: 'Dominick',
+        name: 'Greg',
         profilePhoto: Data.profileImage,
       ),
       ChatUser(
@@ -80,7 +81,7 @@ class _ChatScreenState extends State<ChatScreen> {
           backGroundColor: theme.appBarColor,
           profilePicture: Data.profileImage,
           backArrowColor: theme.backArrowColor,
-          chatTitle: "My Agency Chat",
+          chatTitle: "Groupe Chat",
           chatTitleTextStyle: TextStyle(
             color: theme.appBarTitleTextStyle,
             fontWeight: FontWeight.bold,

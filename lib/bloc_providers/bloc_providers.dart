@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/single_child_widget.dart';
 
 import '../features/auth/presentation/sign_in/manager/sign_in_bloc.dart';
+import '../features/chat/presentation/manager/chat_bloc.dart';
 import '../features/home/presentation/manager/home_bloc.dart';
 import '../features/project/presentation/manager/project_bloc.dart';
 
@@ -20,5 +21,9 @@ List<SingleChildWidget> get blocProviders => [
       BlocProvider(
         lazy: false,
         create: (context) => getIt<ProjectBloc>(),
+      ),
+      BlocProvider(
+        lazy: false,
+        create: (context) => getIt<ChatBloc>(),
       ),
     ];

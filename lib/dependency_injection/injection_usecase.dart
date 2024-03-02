@@ -77,4 +77,14 @@ void usecases() {
       getIt(),
     ),
   );
+  getIt.registerLazySingleton<GetAllMessagesUseCase>(
+    () => GetAllMessagesUseCase(
+      getIt(),
+    ),
+  );
+  getIt.registerLazySingleton<SendMessageUseCase>(
+    () => SendMessageUseCase(
+      getIt(),
+    ),
+  );
 }

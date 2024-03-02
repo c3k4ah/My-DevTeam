@@ -19,4 +19,9 @@ void repositories() {
       getIt(),
     ),
   );
+  getIt.registerLazySingleton<ChatRepository>(
+    () => ChatRepositoryImpl(
+      getIt(),
+    ),
+  );
 }
